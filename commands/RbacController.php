@@ -16,8 +16,6 @@ class RbacController extends Controller
         $auth = Yii::$app->authManager;
         $auth->removeAll();
 
-        $auth = Yii::$app->authManager;
-
         $importProxies = $auth->createPermission('importProxies');
         $importProxies->description = 'Импортировать список прокси из файла';
         $auth->add($importProxies);
