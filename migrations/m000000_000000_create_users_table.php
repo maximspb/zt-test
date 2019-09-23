@@ -26,8 +26,8 @@ class m000000_000000_create_users_table extends Migration
             'password_reset_token' => $this->string()->unique(),
             'email' => $this->string()->notNull()->unique(),
             'status' => $this->smallInteger()->notNull()->defaultValue(10),
-            'created_at' => $this->dateTime()->defaultValue((new \yii\db\Expression('NOW()'))),
-            'updated_at' =>$this->dateTime()->defaultValue((new \yii\db\Expression('NOW()'))),
+            'created_at' => $this->integer()->defaultValue((new DateTimeImmutable('now'))->getTimestamp()),
+            'updated_at' => $this->integer()->defaultValue((new DateTimeImmutable('now'))->getTimestamp()),
         ], $tableOptions);
     }
 
