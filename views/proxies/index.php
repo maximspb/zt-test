@@ -7,15 +7,16 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\ProxySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Proxies';
+$this->title = 'Список прокси';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="proxy-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
+    <p> <?php if (Yii::$app->user->can('admin')) : ?>
         <?= Html::a('Добавить прокси', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php endif;?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -30,7 +31,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'created_at',
             'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+              'visibleButtons' => [
+                'update' => Yii::$app->user->can('admin'),
+                'delete' => Yii::$app->user->can('admin')
+            ]
+            ],
+
         ],
     ]); ?>
 

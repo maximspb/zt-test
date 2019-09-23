@@ -6,6 +6,7 @@ use app\models\UploadCsvForm;
 use Yii;
 use app\models\Proxy;
 use app\models\ProxySearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -23,9 +24,23 @@ class ProxiesController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'import', 'view'],
+                        'roles' => ['editor'],
+                    ],
                 ],
             ],
         ];
