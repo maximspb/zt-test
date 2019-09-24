@@ -6,6 +6,10 @@ namespace app\commands;
 use Yii;
 use yii\console\Controller;
 
+/**
+ * Class RbacController
+ * @package app\commands
+ */
 class RbacController extends Controller
 {
     /**

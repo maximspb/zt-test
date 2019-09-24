@@ -2,10 +2,13 @@
 
 namespace app\services;
 
+use Throwable;
+use Yii;
 use yii\base\Exception;
 use yii\web\UploadedFile;
 
 /**
+ * Сервис импорта данных из загружаемых файлов
  * Class ImportDataFromFileService
  * @package app\services
  */
@@ -57,7 +60,7 @@ class ImportDataFromFileService
             ('. $this->fieldsForImport .')';
 
         try {
-            \Yii::$app
+            Yii::$app
                 ->db
                 ->createCommand($sql)
                 ->bindValue(':csvFile', $this->file->tempName)
@@ -66,7 +69,7 @@ class ImportDataFromFileService
                 ->bindValue(':ignoreNumber', $ignoreLines)
                 ->execute();
             return true;
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
             return false;
         }
     }

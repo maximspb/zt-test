@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "proxies".
@@ -13,7 +14,7 @@ use Yii;
  * @property string $created_at
  * @property string $updated_at
  */
-class Proxy extends \yii\db\ActiveRecord
+class Proxy extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -44,9 +45,9 @@ class Proxy extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'ip' => 'Ip',
-            'port' => 'Port',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'port' => 'Порт',
+            'created_at' => 'Добавлен',
+            'updated_at' => 'Отредактирован',
         ];
     }
 }
