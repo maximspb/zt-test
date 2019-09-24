@@ -136,11 +136,11 @@ class ProxiesController extends Controller
         if (Yii::$app->request->isPost) {
             $model->csvFile = UploadedFile::getInstance($model, 'csvFile');
             if ($model->upload()) {
-                Yii::$app->session->setFlash('success','Прокси из файла успешно добавлены в базу данных');
+                Yii::$app->session->setFlash('success', 'Прокси из файла успешно добавлены в базу данных');
                 return $this->redirect('index');
             }
         }
-        return $this->render('import',  ['model' => $model]);
+        return $this->render('import', ['model' => $model]);
     }
 
     /**

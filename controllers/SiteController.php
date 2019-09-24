@@ -94,6 +94,9 @@ class SiteController extends Controller
         ]);
     }
 
+    /**Метод входа под другим пользователем (доступен для админа)
+     * @return string|Response
+     */
     public function actionSwitch()
     {
         if (!Yii::$app->user->can('admin')) {
@@ -106,7 +109,7 @@ class SiteController extends Controller
                 return $this->redirect('/');
             }
         } catch (NotFoundHttpException $exception) {
-            Yii::$app->session->setFlash('error',$exception->getMessage());
+            Yii::$app->session->setFlash('error', $exception->getMessage());
             return $this->redirect('/site/switch');
         }
 

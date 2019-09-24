@@ -14,7 +14,7 @@ class m190923_100349_add_admin_user extends Migration
     {
         $admin = \app\models\User::findOne(['username' => 'admin']);
         if (empty($admin)) {
-            $password_hash = \Yii::$app->security->generatePasswordHash(env('ADMIN_PASSWORD')); //@todo: заменить на переменную сборки
+            $password_hash = \Yii::$app->security->generatePasswordHash(env('ADMIN_PASSWORD'));
             $auth_key = \Yii::$app->security->generateRandomString();
 
             $sql = "insert into users (username, auth_key, password_hash, email)

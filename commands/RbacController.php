@@ -8,6 +8,7 @@ use Yii;
 use yii\console\Controller;
 
 /**
+ * Назначение ролей стартовым пользователям
  * Class RbacController
  * @package app\commands
  */

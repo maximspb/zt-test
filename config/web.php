@@ -9,7 +9,7 @@ $config = [
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'modules' => [
         'rbac' => [
@@ -60,7 +60,7 @@ $config = [
             ],
         ],
         'db' => $db,
-        
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -79,8 +79,8 @@ $config = [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'sourceLanguage' => 'ru-Ru',
                     'fileMap' => [
-                        'basic'     => 'basic.php',
-                        'app'       => 'app.php',
+                        'basic' => 'basic.php',
+                        'app' => 'app.php',
                         'app/error' => 'error.php',
                     ],
                 ],

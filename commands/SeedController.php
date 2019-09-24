@@ -34,7 +34,7 @@ class SeedController extends Controller
             /*Создаем второго админа, если его нет в базе*/
             $secondAdmin = User::findOne(['username' => 'admin2']);
 
-            if(empty($secondAdmin)) {
+            if (empty($secondAdmin)) {
                 $admin2 = new User();
                 $admin2->username = 'admin2';
                 $admin2->email = $faker->email;
