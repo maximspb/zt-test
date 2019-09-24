@@ -31,16 +31,21 @@ class SeedController extends Controller
         $adminRole = $auth->getRole('admin');
 
         try {
-            /*Создаем второго админа*/
-            $admin2 = new User();
-            $admin2->username = 'admin2';
-            $admin2->email = $faker->email;
-            $admin2->setPassword($this->testPassword);
-            $admin2->generateAuthKey();
+            /*Создаем второго админа, если его нет в базе*/
+            $secondAdmin = User::findOne(['username' => 'admin2']);
 
-            if ($admin2->save()) {
-                $auth->assign($adminRole, $admin2);
+            if(empty($secondAdmin)) {
+                $admin2 = new User();
+                $admin2->username = 'admin2';
+                $admin2->email = $faker->email;
+                $admin2->setPassword($this->testPassword);
+                $admin2->generateAuthKey();
+
+                if ($admin2->save()) {
+                    $auth->assign($adminRole, $admin2);
+                }
             }
+
 
             for ($i = 1; $i <= 5; $i++) {
                 /*Создаем тестовых юзеров с ролью Редактора*/
@@ -56,7 +61,7 @@ class SeedController extends Controller
 
             return true;
         } catch (\Throwable $exception) {
-            echo 'some errors';
+            echo $exception->getMessage();
 
             return false;
         }

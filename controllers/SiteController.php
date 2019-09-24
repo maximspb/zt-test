@@ -95,9 +95,12 @@ class SiteController extends Controller
 
     public function actionSwitch()
     {
+        if (!Yii::$app->user->can('admin')) {
+            return $this->redirect('/');
+        }
         $model = new SwitchUserForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->redirect('/');
         }
 
         return $this->render('switch', [

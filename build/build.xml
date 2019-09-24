@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="zt-test" default="seed" basedir=".">
+    <target name="prepare">
+        <echo msg="dir is ${project.basedir}"/>
+    </target>
+    <target name="configs" depends="prepare">
+        <echo msg="Передаем данные в конфиг"/>
+        <copy file="${project.basedir}/build/config/env_prod" tofile="${project.basedir}/.env" overwrite="true">
+            <filterchain>
+                <replacetokens begintoken="{{" endtoken="}}">
+                    <token key="db.name" value="${db.name}" />
+                    <token key="db.username" value="${db.username}" />
+                    <token key="db.password" value="${db.password}" />
+                    <token key="admin.password" value="${admin.password}" />
+                    <token key="admin.email" value="${admin.email}" />
+                    <token key="editor.email" value="${editor.email}" />
+                    <token key="editor.password" value="${editor.password}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+    </target>
+    <target name="composer" depends="configs">
+        <echo msg="Устанавливаем зависимости"/>
+        <exec command="composer install" dir="${project.basedir}" passthru="true"/>
+    </target>
+    <target name="migrate" depends="composer">
+        <echo msg="Применяем миграции"/>
+        <exec  dir="${project.basedir}" command="php yii migrate" passthru="true" />
+    </target>
+    <target name="migrate_rbac" depends="migrate">
+        <echo msg="Применяем миграции RBAC"/>
+        <exec  dir="${project.basedir}" command="php yii migrate/up --migrationPath=@yii/rbac/migrations" passthru="true" />
+    </target>
+    <target name="rbac_init" depends="migrate_rbac">
+        <echo msg="Создаем роли. Назначаем роли админа и редактора первым двум пользователям"/>
+        <exec  dir="${project.basedir}" command="php yii rbac/init" passthru="true" />
+    </target>
+    <target name="seed" depends="rbac_init">
+        <echo msg="Заполняем таблицы прокси и юзеров тестовыми данными"/>
+        <exec  dir="${project.basedir}" command="php yii seed/proxies" passthru="true" />
+        <exec  dir="${project.basedir}" command="php yii seed/users" passthru="true" />
+    </target>
+</project>
