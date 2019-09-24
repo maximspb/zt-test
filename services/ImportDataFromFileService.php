@@ -45,18 +45,15 @@ class ImportDataFromFileService
     }
 
     /**
-     * @param string $fieldsTerminator
-     * @param string $linesTerminator
-     * @param int $ignoreLines
      * @return bool
      */
-    public function importFromCsvInDatabase(string $fieldsTerminator = ',', $linesTerminator = "\n", $ignoreLines = 1): bool
+    public function importFromCsvInDatabase(): bool
     {
         $sql = 'LOAD DATA LOCAL INFILE :csvFile
             INTO TABLE '. $this->tableName . ' 
-            FIELDS TERMINATED BY :fieldsTerminator
-            LINES TERMINATED BY :linesTerminator
-            IGNORE :ignoreNumber LINES
+            FIELDS TERMINATED BY \';\'
+            LINES TERMINATED BY \'\n\'
+            IGNORE 1 LINES
             ('. $this->fieldsForImport .')';
 
         try {
@@ -64,9 +61,6 @@ class ImportDataFromFileService
                 ->db
                 ->createCommand($sql)
                 ->bindValue(':csvFile', $this->file->tempName)
-                ->bindValue(':fieldsTerminator', $fieldsTerminator)
-                ->bindValue(':linesTerminator', $linesTerminator)
-                ->bindValue(':ignoreNumber', $ignoreLines)
                 ->execute();
             return true;
         } catch (Throwable $exception) {

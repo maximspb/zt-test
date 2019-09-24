@@ -9,6 +9,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use yii\widgets\Menu;
 
 AppAsset::register($this);
 ?>
@@ -29,7 +30,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => 'Тестовая админка',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -38,7 +39,6 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Главная страница', 'url' => ['/site/index']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Вход в систему', 'url' => ['/site/login']]
             ) : (
@@ -50,9 +50,24 @@ AppAsset::register($this);
                 )
                 . Html::endForm()
                 . '</li>'
-            )
+            ),
         ],
     ]);
+    if (Yii::$app->user->can('admin')) {
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-right'],
+            'items' => [
+                ['label' => 'Зайти под другим пользователем', 'url' => ['/site/switch']],
+                ['label' => 'Управление пользователями', 'url' => ['/users']],
+                ['label' => 'Роли и разрешения', 'url' => ['/rbac/assignment'], 'items' => [
+                    ['label' => 'Назначение ролей и разрешений', 'url' => ['/rbac/assignment']],
+                    ['label' => 'Создание разрешений', 'url' => ['/rbac/permission']],
+                    ['label' => 'Создание ролей', 'url' => ['/rbac/role']],
+                ]],
+            ]
+        ]);
+    }
+
     NavBar::end();
     ?>
 
