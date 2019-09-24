@@ -14,6 +14,18 @@ $config = [
     'modules' => [
         'rbac' => [
             'class' => \yii2mod\rbac\Module::class,
+            'as access' => [
+                'class' => yii\filters\AccessControl::class,
+                'ruleConfig' => [
+                    'class' => yii\filters\AccessRule::class,
+                ],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
+                ],
+            ],
         ],
     ],
     'components' => [
