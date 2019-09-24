@@ -26,11 +26,11 @@
     </target>
     <target name="migrate" depends="composer">
         <echo msg="Применяем миграции"/>
-        <exec  dir="${project.basedir}" command="php yii migrate" passthru="true" />
+        <exec  dir="${project.basedir}" command="php yii migrate --interactive=0" passthru="true" />
     </target>
     <target name="migrate_rbac" depends="migrate">
         <echo msg="Применяем миграции RBAC"/>
-        <exec  dir="${project.basedir}" command="php yii migrate/up --migrationPath=@yii/rbac/migrations" passthru="true" />
+        <exec  dir="${project.basedir}" command="php yii migrate/up --migrationPath=@yii/rbac/migrations --interactive=0" passthru="true" />
     </target>
     <target name="rbac_init" depends="migrate_rbac">
         <echo msg="Создаем роли. Назначаем роли админа и редактора первым двум пользователям"/>

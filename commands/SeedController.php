@@ -42,7 +42,7 @@ class SeedController extends Controller
                 $admin2->generateAuthKey();
 
                 if ($admin2->save()) {
-                    $auth->assign($adminRole, $admin2);
+                    $auth->assign($adminRole, $admin2->getId());
                 }
             }
 
@@ -87,7 +87,7 @@ class SeedController extends Controller
 
             return true;
         } catch (\Throwable $exception) {
-            echo 'some errors';
+            echo $exception->getMessage();
 
             return false;
         }
