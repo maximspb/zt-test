@@ -107,7 +107,7 @@ class SiteController extends Controller
             }
         } catch (NotFoundHttpException $exception) {
             Yii::$app->session->setFlash('error',$exception->getMessage());
-            return $this->goBack();
+            return $this->redirect('/site/switch');
         }
 
         return $this->render('switch', [
