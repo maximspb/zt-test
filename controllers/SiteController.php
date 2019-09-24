@@ -8,6 +8,7 @@ use yii\captcha\CaptchaAction;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\ErrorAction;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
@@ -99,8 +100,14 @@ class SiteController extends Controller
             return $this->redirect('/');
         }
         $model = new SwitchUserForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->redirect('/');
+
+        try {
+            if ($model->load(Yii::$app->request->post()) && $model->login()) {
+                return $this->redirect('/');
+            }
+        } catch (NotFoundHttpException $exception) {
+            Yii::$app->session->setFlash('error',$exception->getMessage());
+            return $this->goBack();
         }
 
         return $this->render('switch', [

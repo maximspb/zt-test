@@ -3,7 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\base\Exception;
 use yii\base\Model;
+use yii\web\NotFoundHttpException;
 
 class SwitchUserForm extends Model
 {
@@ -38,14 +40,16 @@ class SwitchUserForm extends Model
     }
 
     /**
-     * Finds user by [[username]]
-     *
-     * @return User|null
+     * @return User|bool|null
+     * @throws Exception
      */
     public function getUser()
     {
         if ($this->_user === false) {
             $this->_user = User::findByUsername($this->username);
+            if (empty($this->_user)) {
+                throw new NotFoundHttpException('Пользователь с таким ником не найден');
+            }
         }
 
         return $this->_user;
