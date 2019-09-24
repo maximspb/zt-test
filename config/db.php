@@ -2,9 +2,9 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=zt-test', //@todo: заменить на переменные при сборке
-    'username' => 'homestead', //@todo: заменить на переменные при сборке
-    'password' => 'secret', //@todo: заменить на переменные при сборке
+    'dsn' => 'mysql:host='.env('DB_HOST').';dbname='.env('DB_NAME'),
+    'username' => env('DB_USERNAME'),
+    'password' => env('DB_PASSWORD'),
     'charset' => 'utf8',
     'attributes' => [PDO::MYSQL_ATTR_LOCAL_INFILE => true],
 
